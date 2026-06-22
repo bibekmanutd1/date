@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 🌷</title>
+<style>
+body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#ffe6eb,#fff0f5);display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden}
+.card{background:white;padding:40px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.1);text-align:center;width:320px;animation:fadeIn 0.5s ease;z-index:2}
+h1{font-size:22px;color:#333}p{color:#666}
+button,input{margin-top:10px;padding:10px 15px;border-radius:10px;border:none;font-size:14px}
+button{cursor:pointer}
+#yes{background:#ff4d6d;color:white}
+#no{background:#ddd;position:absolute}
+.hidden{display:none}
+.heart{position:fixed;bottom:-10px;font-size:20px;animation:floatUp 4s linear infinite;opacity:.7}
+@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:.8}100%{transform:translateY(-100vh) scale(1.5);opacity:0}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+iframe{display:none}
+</style>
+</head>
+<body>
+<iframe id="musicPlayer"></iframe>
+<div class="card" id="screen1">
+<h1>Will you go on a date with me? 🌷</h1>
+<button id="yes" onclick="startExperience()">Yes 💖</button>
+<button id="no" onmouseover="moveNo()">No 😢</button>
+</div>
+<div class="card hidden" id="screen2">
+<h1>Wait… you actually said yes? 😳</h1>
+<p>I was fully prepared for rejection...</p>
+<button onclick="next(3)">Okay 😅</button>
+</div>
+<div class="card hidden" id="screen3">
+<h1>So… when are you free? 😉</h1>
+<input type="date" id="date"><br>
+<input type="time" id="time"><br>
+<button onclick="submitDate()">Set the date 📅</button>
+<p id="result"></p>
+</div>
+<script>
+function moveNo(){const btn=document.getElementById('no');const x=Math.random()*(window.innerWidth-100);const y=Math.random()*(window.innerHeight-100);btn.style.left=x+'px';btn.style.top=y+'px'}
+function startExperience(){const player=document.getElementById('musicPlayer');player.src='https://www.youtube.com/embed/vUSzL2leaFM?autoplay=1&loop=1&playlist=vUSzL2leaFM';confettiBurst();setInterval(createHeart,300);next(2)}
+function next(screen){document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));document.getElementById('screen'+screen).classList.remove('hidden')}
+function submitDate(){const date=document.getElementById('date').value;const time=document.getElementById('time').value;if(date&&time){document.getElementById('result').innerText="It's a date 😌 I'll see you on "+date+" at "+time+" 💕"}else{document.getElementById('result').innerText="You gotta pick both 😄"}}
+function createHeart(){const heart=document.createElement('div');heart.classList.add('heart');heart.innerText='💖';heart.style.left=Math.random()*100+'vw';heart.style.fontSize=(15+Math.random()*20)+'px';document.body.appendChild(heart);setTimeout(()=>heart.remove(),4000)}
+function confettiBurst(){for(let i=0;i<40;i++){let c=document.createElement('div');c.innerText='✨';c.style.position='fixed';c.style.left=Math.random()*100+'vw';c.style.top=Math.random()*100+'vh';c.style.fontSize='20px';document.body.appendChild(c);setTimeout(()=>c.remove(),1500)}}
+</script>
+</body>
+</html>
